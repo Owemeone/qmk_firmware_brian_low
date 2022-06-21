@@ -56,11 +56,11 @@
     N30, N31, K32, K33, K34,                K35, K36, K37, N38, N39\
 )\
 LAYOUT(\
-KC_GRV,     KC_1,   KC_2,       KC_3,   KC_4,   KC_5,                   KC_6,   KC_7,   KC_8,   KC_9,   KC_0,   KC_GRV,\
-KC_ESC,     K00,    K01,        K02,    K03,    K04,                    K05,    K06,    K07,    K08,    K09,    KC_BSPC,\
-KC_TAB,     K10,    K11,        K12,    K13,    K14,                    K15,    K16,    K17,    K18,    K19,    KC_QUOT,\
-KC_LSFT,    K20,    K21,        K22,    K23,    K24,    XXX,    XXX,    K25,    K26,    K27,    K28,    K29,    KC_RSFT,\
-                    KC_LGUI,    XXX,    K32,    K33,    K34,    K35,    K36,    K37,    XXX,    KC_RGUI\
+    KC_GRV,     KC_1,   KC_2,       KC_3,   KC_4,   KC_5,                   KC_6,   KC_7,   KC_8,       KC_9,   KC_0,   TG(GAME),\
+    KC_ESC,     K00,    K01,        K02,    K03,    K04,                    K05,    K06,    K07,        K08,    K09,    KC_BSLS,\
+    KC_TAB,     K10,    K11,        K12,    K13,    K14,                    K15,    K16,    K17,        K18,    K19,    KC_QUOT,\
+    KC_LSFT,    K20,    K21,        K22,    K23,    K24,    XXX,    XXX,    K25,    K26,    K27,        K28,    K29,    KC_RSFT,\
+                        XXX,    KC_LGUI,    K32,    K33,    K34,    K35,    K36,    K37,    KC_RGUI,    XXX\
 )
 
 #define MASTER_LEFT
@@ -106,7 +106,7 @@ KC_LSFT,    K20,    K21,        K22,    K23,    K24,    XXX,    XXX,    K25,    
 //#define ENABLE_RGB_MATRIX_CYCLE_ALL
 // #define ENABLE_RGB_MATRIX_CYCLE_LEFT_RIGHT
 // #define ENABLE_RGB_MATRIX_CYCLE_UP_DOWN
-#define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
+//#define ENABLE_RGB_MATRIX_RAINBOW_MOVING_CHEVRON
 // #define ENABLE_RGB_MATRIX_CYCLE_OUT_IN
 //#define ENABLE_RGB_MATRIX_CYCLE_OUT_IN_DUAL
 //#define ENABLE_RGB_MATRIX_CYCLE_PINWHEEL

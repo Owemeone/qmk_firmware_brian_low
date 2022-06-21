@@ -22,7 +22,8 @@ enum layers
   MOUSE,
   SYM,
   NUM,
-  FUN
+  FUN,
+  GAME
 };
 
 #if defined MIRYOKU_CLIPBOARD_FUN
@@ -258,7 +259,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         U_UND, U_CUT, U_CPY, U_PST, U_RDO, U_RDO, U_PST, U_CPY, U_CUT, U_UND,
         KC_LGUI, KC_LALT, KC_LCTL, KC_LSFT, KC_TRNS, KC_TRNS, KC_LSFT, KC_LCTL, KC_LALT, KC_LGUI,
         U_UND, U_CUT, U_CPY, U_PST, U_RDO, U_RDO, U_PST, U_CPY, U_CUT, U_UND,
-        U_NP, U_NP, KC_BTN2, KC_BTN3, KC_BTN1, KC_BTN1, KC_BTN3, KC_BTN2, U_NP, U_NP)};
+        U_NP, U_NP, KC_BTN2, KC_BTN3, KC_BTN1, KC_BTN1, KC_BTN3, KC_BTN2, U_NP, U_NP),
+    [GAME] = LAYOUT(
+        KC_GRV,     KC_1,   KC_2,     KC_3,   KC_4,   KC_5,                     KC_6,     KC_7,   KC_8,     KC_9,   KC_0,     TG(GAME),
+        KC_LALT,    KC_Q,   KC_W,     KC_E,   KC_R,   KC_T,                     KC_Y,     KC_U,   KC_I,     KC_O,   KC_P,     KC_RALT,
+        KC_LCTL,    KC_A,   KC_S,     KC_D,   KC_F,   KC_G,                     KC_H,     KC_J,   KC_K,     KC_L,   KC_QUOT,  KC_RCTL,
+        KC_LSFT,    KC_Z,   KC_X,     KC_C,   KC_V,   KC_B,   U_NU,     U_NU,   KC_N,     KC_M,   KC_COMM,  KC_DOT, KC_SLSH,  KC_RSFT,
+                            KC_LGUI,  U_NU,   KC_ESC, KC_SPC, KC_TAB,   KC_ENT, KC_BSPC,  KC_DEL, U_NU,     KC_RGUI)};
 
 #ifdef OLED_ENABLE
 
@@ -352,6 +359,9 @@ static void print_status_narrow(void)
   case FUN:
     oled_write_P(PSTR("Fun  "), false);
     break;
+  case GAME:
+    oled_write_P(PSTR("Game "), false);
+    break;
   default:
     oled_write_P(PSTR("???  "), false);
   }
@@ -375,10 +385,10 @@ bool oled_task_user(void)
   else
   {
     render_logo();
-    #ifdef WPM_ENABLE
-    oled_set_cursor(0,13);
+#ifdef WPM_ENABLE
+    oled_set_cursor(0, 13);
     write_int_ln(PSTR("WPM\n"), get_current_wpm());
-    #endif // WPM_ENABLE
+#endif // WPM_ENABLE
   }
 
   return false;
@@ -398,6 +408,7 @@ bool encoder_update_user(uint8_t index, bool clockwise)
   case MOUSE:
   case SYM:
   case NUM:
+  case GAME:
     if (index == 0)
     {
       if (clockwise)
@@ -477,3 +488,21 @@ bool encoder_update_user(uint8_t index, bool clockwise)
 }
 
 #endif // ENCODER_ENABLE
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    switch (get_highest_layer(state)) {
+    case GAME:
+        rgb_matrix_mode_noeeprom(RGB_MATRIX_CUSTOM_GAME);
+        rgb_matrix_enable_noeeprom();
+        if (get_autoshift_state()) {
+          autoshift_disable();
+        }
+        break;
+    default: //  for any other layers, or the default layer
+        if (!get_autoshift_state()) {
+          autoshift_enable();
+        }
+        break;
+    }
+  return state;
+}
