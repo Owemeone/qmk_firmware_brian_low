@@ -488,21 +488,3 @@ bool encoder_update_user(uint8_t index, bool clockwise)
 }
 
 #endif // ENCODER_ENABLE
-
-layer_state_t layer_state_set_user(layer_state_t state) {
-    switch (get_highest_layer(state)) {
-    case GAME:
-        rgb_matrix_mode_noeeprom(RGB_MATRIX_CUSTOM_GAME);
-        rgb_matrix_enable_noeeprom();
-        if (get_autoshift_state()) {
-          autoshift_disable();
-        }
-        break;
-    default: //  for any other layers, or the default layer
-        if (!get_autoshift_state()) {
-          autoshift_enable();
-        }
-        break;
-    }
-  return state;
-}
